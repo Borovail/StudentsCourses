@@ -1,5 +1,4 @@
-﻿using ExamWpf.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ExamWpf
+namespace ExamWpf.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Studens.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Studens : Page
     {
-        public MainWindow()
+        public Studens()
         {
             InitializeComponent();
-            MainFrame.Navigate(new Courses());
         }
     }
 }

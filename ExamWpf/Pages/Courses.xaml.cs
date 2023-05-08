@@ -1,5 +1,4 @@
-﻿using ExamWpf.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ExamWpf
+namespace ExamWpf.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Courses.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Courses : Page
     {
-        public MainWindow()
+        List<string> MyListBoxItems;
+        public Courses()
         {
             InitializeComponent();
-            MainFrame.Navigate(new Courses());
+            MyListBoxItems = new List<string> { "fdsf", "fds" };
+
         }
     }
 }
