@@ -25,7 +25,6 @@ namespace ExamWpf
         {
             InitializeComponent();
             MainFrame.Navigate(new MainPage());
-
         }
 
         

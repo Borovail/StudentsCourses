@@ -20,6 +20,10 @@ namespace ExamWpf.Pages
     /// </summary>
     public partial class MainPage : Page
     {
+        public  MainPage() 
+        {
+            InitializeComponent();
+        }
         private void Convert_btn_Click(object sender, RoutedEventArgs e)
         {
             NavigationGrid.Visibility = Visibility.Hidden;
