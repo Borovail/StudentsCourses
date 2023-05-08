@@ -8,6 +8,6 @@ namespace ExamWpf.Model
 {
     internal class AppData
     {
-        public static UniversityEntities db = new UniversityEntities();
+        public static UniversityEntities1 db = new UniversityEntities1();
     }
 }

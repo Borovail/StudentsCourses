@@ -1,4 +1,5 @@
-﻿using ExamWpf.Model;
+﻿
+using ExamWpf.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,12 @@ namespace ExamWpf.Pages
         {
             InitializeComponent();
             Loaded += Courses_Loaded;
-
+            MyListBoxItems = new List<string>() { "dffsd", "fdsf", "fdsf" };
         }
 
         private async void Courses_Loaded(object sender, RoutedEventArgs e)
         {
-            var courses = await Task.Run(() => AppData.db.Students.ToList());
+            var courses = await Task.Run(() => AppData.db.Courses);
 
             await Dispatcher.InvokeAsync(() => { DataGrid.ItemsSource = courses; });
   

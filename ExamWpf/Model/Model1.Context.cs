@@ -13,10 +13,10 @@ namespace ExamWpf.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class UniversityEntities : DbContext
+    public partial class UniversityEntities1 : DbContext
     {
-        public UniversityEntities()
-            : base("name=UniversityEntities")
+        public UniversityEntities1()
+            : base("name=UniversityEntities1")
         {
         }
     

@@ -1,4 +1,5 @@
-﻿using ExamWpf.Model;
+﻿
+using ExamWpf.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +26,21 @@ namespace ExamWpf.Pages
         {
             InitializeComponent();
             Loaded += Studens_Loaded;
+
         }
 
         private async void Studens_Loaded(object sender, RoutedEventArgs e)
         {
+            List<string> CourseNames = new List<string>();
+
             var students = await Task.Run(() => AppData.db.Students.ToList());
 
             await Dispatcher.InvokeAsync(() => { DataGrid.ItemsSource = students; });
+
+            foreach (var item in AppData.db.Courses) CourseNames.Add(item.Name);
+
+            (DataGrid.Columns[4] as DataGridComboBoxColumn).ItemsSource = CourseNames;
         }
     }
+    
 }
