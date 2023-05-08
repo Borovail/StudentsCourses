@@ -2,6 +2,7 @@
 using ExamWpf.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,43 @@ namespace ExamWpf.Pages
 
             (DataGrid.Columns[4] as DataGridComboBoxColumn).ItemsSource = CourseNames;
         }
+
+        private async void Delete_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid.SelectedItem != null)
+            {
+                if (MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    AppData.db.Students.Remove(DataGrid.SelectedItem as Model.Students);
+
+                    await AppData.db.SaveChangesAsync();
+                }
+            }
+        }
+
+        private async void Update_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid.SelectedItem != null)
+            {
+                AppData.db.Students.AddOrUpdate(DataGrid.SelectedItem as Students);
+
+                await AppData.db.SaveChangesAsync();
+            }
+        }
+        private async void Add_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (DataGrid.SelectedItem != null)
+            {
+                var currentStudent = DataGrid.SelectedItem as Students;
+
+                var student = new Students() { Age = currentStudent.Age, CourseName = currentStudent.CourseName, Name = currentStudent.Name, Surname = currentStudent.Surname };
+
+                AppData.db.Students.Add(student);
+
+                await AppData.db.SaveChangesAsync();
+            }
+        }
+
     }
-    
 }
