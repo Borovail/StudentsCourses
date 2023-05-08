@@ -2,6 +2,7 @@
 using ExamWpf.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,10 +33,46 @@ namespace ExamWpf.Pages
 
         private async void Courses_Loaded(object sender, RoutedEventArgs e)
         {
-            var courses = await Task.Run(() => AppData.db.Courses);
+            var courses = await Task.Run(() => AppData.db.Courses.ToList());
 
             await Dispatcher.InvokeAsync(() => { DataGrid.ItemsSource = courses; });
-  
+        }
+
+        private async void Delete_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid.SelectedItem != null)
+            {
+                if (MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    AppData.db.Courses.Remove(DataGrid.SelectedItem as Model.Courses);
+
+                    await AppData.db.SaveChangesAsync();
+                }
+            }
+        }
+
+        private async void Update_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid.SelectedItem != null)
+            {
+                AppData.db.Courses.AddOrUpdate(DataGrid.SelectedItem as Model.Courses);
+
+                await AppData.db.SaveChangesAsync();
+            }
+        }
+
+        private async void Add_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid.SelectedItem != null)
+            {
+                var currentCourse = DataGrid.SelectedItem as Model.Courses;
+
+                var course = new Model.Courses() { Name = currentCourse.Name, Teacher= currentCourse.Teacher };
+
+                AppData.db.Courses.Add(course);
+
+                await AppData.db.SaveChangesAsync();
+            }
         }
     }
 }
