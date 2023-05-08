@@ -28,6 +28,11 @@ namespace ExamWpf.Pages
             InitializeComponent();
             Loaded += Studens_Loaded;
 
+            comboBox.Items.Add("Name");
+            comboBox.Items.Add("Surname");
+
+            comboBox.SelectedItem = "Name";
+
         }
 
         private async void Studens_Loaded(object sender, RoutedEventArgs e)
@@ -80,6 +85,22 @@ namespace ExamWpf.Pages
             }
         }
 
-      
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (textBox.Text == "")
+            {
+                DataGrid.ItemsSource = AppData.db.Students.ToList();
+            }
+
+            if (comboBox.SelectedItem.ToString() == "Name")
+                DataGrid.ItemsSource = AppData.db.Students.Where(i => i.Name.Contains(textBox.Text)).ToList();
+            else DataGrid.ItemsSource = AppData.db.Students.Where(i => i.Surname.Contains(textBox.Text)).ToList();
+
+        }
+
+        private void Back_bnt_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
     }
 }

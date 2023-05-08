@@ -27,8 +27,16 @@ namespace ExamWpf.Pages
         public Courses()
         {
             InitializeComponent();
+
             Loaded += Courses_Loaded;
+
             MyListBoxItems = new List<string>() { "dffsd", "fdsf", "fdsf" };
+
+            comboBox.Items.Add("Teacher");
+            comboBox.Items.Add("Name");
+
+            comboBox.SelectedItem= "Name";
+
         }
 
         private async void Courses_Loaded(object sender, RoutedEventArgs e)
@@ -73,6 +81,25 @@ namespace ExamWpf.Pages
 
                 await AppData.db.SaveChangesAsync();
             }
+        }
+
+        private  void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (textBox.Text == "")
+            {            
+               DataGrid.ItemsSource = AppData.db.Courses.ToList();
+            }
+
+            if(comboBox.SelectedItem.ToString()=="Name")
+            DataGrid.ItemsSource= AppData.db.Courses.Where(i=>i.Name.Contains(textBox.Text)).ToList();
+            else DataGrid.ItemsSource = AppData.db.Courses.Where(i => i.Teacher.Contains(textBox.Text)).ToList();
+
+        }
+
+        private void Back_bnt_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+            
         }
     }
 }
