@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExamWpf.ControlClass
+namespace ExamWpf.Model
 {
-    internal class ManageClass
+    internal class AppData
     {
+        public static UniversityEntities db = new UniversityEntities();
     }
 }
