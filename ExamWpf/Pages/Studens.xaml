@@ -16,28 +16,14 @@
             <RowDefinition Height="0.1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DataGrid AutoGenerateColumns="False" x:Name="DataGrid" Grid.Row="1">
+        <DataGrid AutoGenerateColumns="False" x:Name="DataGrid" Grid.Row="1" Loaded="DataGrid_Loaded">
             
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id"  Width="*" Binding="{Binding Id}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Name"  Width="*" Binding="{Binding Name}" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Surname"  Width="*" Binding="{Binding Surname}" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Age"  Width="*" Binding="{Binding Age}" ></DataGridTextColumn>
-                <DataGridComboBoxColumn Header="Course" Width="*"  SelectedValueBinding="{Binding CourseName}" 
-                        SelectedValuePath="SelectedText" >
-                    <DataGridComboBoxColumn.ElementStyle>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.courseNames, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
-                            <Setter Property="SelectedItem" Value="{Binding Path=Students.CourseName}" />
-                        </Style>
-                    </DataGridComboBoxColumn.ElementStyle>
-                    <DataGridComboBoxColumn.EditingElementStyle>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.courseNames, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
-                            <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged"></EventSetter>
-                        </Style>
-                    </DataGridComboBoxColumn.EditingElementStyle>
-                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn Header="Course" Width="*" SelectedItemBinding="{Binding CourseName}"></DataGridComboBoxColumn>
         </DataGrid.Columns>
         
     </DataGrid>

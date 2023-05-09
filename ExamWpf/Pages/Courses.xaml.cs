@@ -2,6 +2,8 @@
 using ExamWpf.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
@@ -28,9 +30,8 @@ namespace ExamWpf.Pages
         {
             InitializeComponent();
 
-            Loaded += Courses_Loaded;
 
-            MyListBoxItems = new List<string>() { "dffsd", "fdsf", "fdsf" };
+            MyListBoxItems = new List<string>();
 
             comboBox.Items.Add("Teacher");
             comboBox.Items.Add("Name");
@@ -38,13 +39,25 @@ namespace ExamWpf.Pages
             comboBox.SelectedItem= "Name";
 
         }
-
-        private async void Courses_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var courses = await Task.Run(() => AppData.db.Courses.ToList());
 
+            foreach (var course in courses)
+            {
+                foreach (var student in AppData.db.Students)
+                {
+                    if (course.Name == student.CourseName)
+                    {
+                        course.StudentsInCourse += student.Name + " " + student.Surname + "   ";
+                    }
+                }
+            }
+
             await Dispatcher.InvokeAsync(() => { DataGrid.ItemsSource = courses; });
+
         }
+      
 
         private async void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -55,6 +68,7 @@ namespace ExamWpf.Pages
                     AppData.db.Courses.Remove(DataGrid.SelectedItem as Model.Courses);
 
                     await AppData.db.SaveChangesAsync();
+
                 }
             }
         }
@@ -66,6 +80,7 @@ namespace ExamWpf.Pages
                 AppData.db.Courses.AddOrUpdate(DataGrid.SelectedItem as Model.Courses);
 
                 await AppData.db.SaveChangesAsync();
+
             }
         }
 
@@ -80,6 +95,8 @@ namespace ExamWpf.Pages
                 AppData.db.Courses.Add(course);
 
                 await AppData.db.SaveChangesAsync();
+
+
             }
         }
 
@@ -101,5 +118,23 @@ namespace ExamWpf.Pages
             NavigationService.GoBack();
             
         }
+
+        private void DataGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in DataGrid.Items)
+            {
+                var name = ((Courses)item).Name;
+
+                foreach (var student in AppData.db.Students)
+                {
+                    if (student.CourseName == name)
+                    {
+                        
+                    }
+                }
+            }
+        }
+
+       
     }
 }

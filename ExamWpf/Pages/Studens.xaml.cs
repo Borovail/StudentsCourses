@@ -1,8 +1,13 @@
 ﻿
+using CsvHelper;
 using ExamWpf.Model;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Migrations;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static ExamWpf.Convertor;
 
 namespace ExamWpf.Pages
 {
@@ -108,9 +114,8 @@ namespace ExamWpf.Pages
             foreach (var item in AppData.db.Courses.ToList())
             {
                 courseNames.Add(item.Name);
-
             }
-
+            courseNames.Add("None");
         }
 
         private void ComboBox_Selected(object sender, RoutedEventArgs e)
@@ -118,15 +123,22 @@ namespace ExamWpf.Pages
             AppData.db.Students.AddOrUpdate(DataGrid.SelectedItem as Students);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DataGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            var student =DataGrid.SelectedItem as Students;
+            var column = DataGrid.Columns.First(c => c is DataGridComboBoxColumn) as DataGridComboBoxColumn;
 
-            student.CourseName = ((ComboBox)sender).SelectedItem.ToString();
+            column.ItemsSource = courseNames;
 
-            AppData.db.Students.AddOrUpdate(student);
-
-            ((ComboBox)sender).SelectedItem = student.CourseName;
         }
+        private void ExportToCsv(DataGrid dataGrid, string filePath)
+        {
+            using (var writer = new StreamWriter(filePath))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(dataGrid.Items.OfType<object>());
+            }
+        }
+
+       
     }
 }
