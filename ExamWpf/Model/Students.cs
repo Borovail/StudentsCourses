@@ -11,7 +11,7 @@ namespace ExamWpf.Model
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Students
     {
         public int Id { get; set; }

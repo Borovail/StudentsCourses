@@ -17,13 +17,13 @@
 
         <DataGrid AutoGenerateColumns="False" x:Name="DataGrid" Grid.Row="1">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Id"  Width="*" Binding="{Binding Id}" ></DataGridTextColumn>
+            <DataGridTextColumn Header="Id"  Width="*" Binding="{Binding Id}" IsReadOnly="True" ></DataGridTextColumn>
             <DataGridTextColumn Header="Name"  Width="*" Binding="{Binding Name}" ></DataGridTextColumn>
             <DataGridTextColumn Header="Teacher"  Width="*" Binding="{Binding Teacher}" ></DataGridTextColumn>
             <DataGridTemplateColumn Header="Studets" Width="*">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <ListBox ItemsSource="{Binding students}" >
+                        <ListBox ItemsSource="{Binding students}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                 </DataTemplate>

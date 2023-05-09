@@ -23,30 +23,21 @@ namespace ExamWpf.Pages
     /// </summary>
     public partial class Studens : Page
     {
+        public List<string> courseNames { get; set; }
         public Studens()
         {
             InitializeComponent();
-            Loaded += Studens_Loaded;
 
             comboBox.Items.Add("Name");
             comboBox.Items.Add("Surname");
 
             comboBox.SelectedItem = "Name";
 
+          
+
         }
 
-        private async void Studens_Loaded(object sender, RoutedEventArgs e)
-        {
-            List<string> CourseNames = new List<string>();
 
-            var students = await Task.Run(() => AppData.db.Students.ToList());
-
-            await Dispatcher.InvokeAsync(() => { DataGrid.ItemsSource = students; });
-
-            foreach (var item in AppData.db.Courses) CourseNames.Add(item.Name);
-
-            (DataGrid.Columns[4] as DataGridComboBoxColumn).ItemsSource = CourseNames;
-        }
 
         private async void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -101,6 +92,41 @@ namespace ExamWpf.Pages
         private void Back_bnt_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var students = AppData.db.Students.ToList();
+
+
+            DataGrid.ItemsSource = students;
+
+            DataContext = this;
+
+            courseNames = new List<string>();
+
+            foreach (var item in AppData.db.Courses.ToList())
+            {
+                courseNames.Add(item.Name);
+
+            }
+
+        }
+
+        private void ComboBox_Selected(object sender, RoutedEventArgs e)
+        {
+            AppData.db.Students.AddOrUpdate(DataGrid.SelectedItem as Students);
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var student =DataGrid.SelectedItem as Students;
+
+            student.CourseName = ((ComboBox)sender).SelectedItem.ToString();
+
+            AppData.db.Students.AddOrUpdate(student);
+
+            ((ComboBox)sender).SelectedItem = student.CourseName;
         }
     }
 }
