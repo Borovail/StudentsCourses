@@ -15,7 +15,7 @@
             <RowDefinition Height="0.1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DataGrid AutoGenerateColumns="False" x:Name="DataGrid" Grid.Row="1" Loaded="DataGrid_Loaded" >
+        <DataGrid AutoGenerateColumns="False" x:Name="DataGrid" Grid.Row="1"  >
         <DataGrid.Columns>
             <DataGridTextColumn Header="Id"  Width="*" Binding="{Binding Id}" IsReadOnly="True" ></DataGridTextColumn>
             <DataGridTextColumn Header="Name"  Width="*" Binding="{Binding Name}" ></DataGridTextColumn>

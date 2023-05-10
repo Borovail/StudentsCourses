@@ -134,12 +134,16 @@ namespace ExamWpf.Pages
 
         private void CovertToCSV_btn_Click(object sender, RoutedEventArgs e)
         {
-            Convertor.ExportToCsv(DataGrid,"");
+            PathPage pathPage = new PathPage(DataGrid, ConvertType.Csv);
+
+            NavigationService.Navigate(pathPage);
         }
 
         private void CovertToExcel_btn_Click(object sender, RoutedEventArgs e)
         {
-            Convertor.ExportToExcel(DataGrid, "","");
+            PathPage pathPage = new PathPage(DataGrid, ConvertType.Excel);
+
+            NavigationService.Navigate(pathPage);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace ExamWpf.Pages
     /// </summary>
     public partial class MainPage : Page
     {
-        readonly string Path;
         public MainPage()
         {
             InitializeComponent();

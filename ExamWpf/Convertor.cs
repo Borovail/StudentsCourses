@@ -5,6 +5,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -16,38 +17,93 @@ using System.Windows.Data;
 
 namespace ExamWpf
 {
+    public enum ConvertType
+    {
+       Csv, Excel
+    }
     internal class Convertor
     {
-        public static void ExportToCsv(DataGrid dataGrid, string filePath)
-        {
-            using (var writer = new StreamWriter(Environment.CurrentDirectory + "Courses.csv"))
 
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        public static bool ExportToCsv(DataGrid dataGrid, string pathName, string fileName)
+        {
+
+            string FilePath=Path.Combine(pathName, fileName);
+
+            if (File.Exists(FilePath))
             {
-                csv.WriteRecords(AppData.db.Courses.ToList());
+                if (MessageBox.Show("File already exists, you want to recreate it?", "File path: " + pathName + fileName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    File.Delete(FilePath);
+                }
+                else return false;
             }
+
+            using (StreamWriter writer = new StreamWriter(FilePath))
+            {
+                foreach (var column in dataGrid.Columns)
+                {
+                    writer.Write(column.Header);
+
+                    if (column != dataGrid.Columns.Last())
+                    {
+                        writer.Write("\t");
+                    }
+                }
+
+                writer.WriteLine();
+
+                foreach (var item in dataGrid.Items)
+                {
+                    var properties = item.GetType().GetProperties();
+
+                    for (int i = 0; i < dataGrid.Columns.Count; i++)
+                    {
+                        var value = properties.FirstOrDefault(p => p.Name == dataGrid.Columns[i].SortMemberPath)?.GetValue(item);
+
+                        if (value != null)
+                        {
+                            writer.Write(value.ToString());
+                        }
+
+                        if (dataGrid.Columns[i] != dataGrid.Columns.Last())
+                        {
+                            writer.Write("\t");
+                        }
+                    }
+                        
+                    
+
+                    writer.WriteLine();
+                }
+            }
+                return true;
 
         }
 
-
-
-
-
-        public static void ExportToExcel(DataGrid dataGrid,string path,string fileName)
+        public static bool ExportToExcel(DataGrid dataGrid,string path,string fileName)
         {
+            string filePath = Path.Combine(path, fileName);
+
+            if (File.Exists(filePath))
+            {
+                if (MessageBox.Show("File already exists, you want to recreate it?", "File path: " + path + fileName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    File.Delete(filePath);
+                }
+                else return false;
+            }
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             ExcelPackage excel = new ExcelPackage();
 
             var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
 
-            // Установка заголовков столбцов
             for (int i = 0; i < dataGrid.Columns.Count; i++)
             {
                 workSheet.Cells[1, i + 1].Value = dataGrid.Columns[i].Header;
             }
 
-            // Добавление данных из DataGrid в лист Excel
             for (int i = 0; i < dataGrid.Items.Count; i++)
             {
                 var dataGridRow = dataGrid.ItemContainerGenerator.ContainerFromIndex(i) as DataGridRow;
@@ -67,17 +123,15 @@ namespace ExamWpf
                 }
             }
 
-            // Сохранение рабочей книги в файл
-            string filePath = Path.Combine(path, fileName)+".xlsx";
-
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-
-            FileStream file = new FileStream(filePath, FileMode.CreateNew);
-            excel.SaveAs(file);
-            file.Close();
+           
+           
+                using (FileStream file = new FileStream(filePath, FileMode.CreateNew))
+                {
+                    excel.SaveAs(file);
+                }
+            
+            return true;
+           
         }
     }
 }

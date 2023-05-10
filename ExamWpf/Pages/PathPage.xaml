@@ -8,7 +8,14 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PathPage">
 
-    <Grid>
-        
+    <Grid Background="White">
+        <Button Content="Back" x:Name="Back_btn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="40" Margin="50" FontSize="14" FontWeight="Bold" Click="Back_btn_Click"></Button>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200">
+            <Label Content="Save path" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"></Label>
+            <TextBox x:Name="Path_textBox"></TextBox>
+            <Label Content="File name" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"></Label>
+            <TextBox  x:Name="Name_textBox"></TextBox>
+            <Button x:Name="Confirm_btn" Content="Confirm" Margin="30" Click="Confirm_btn_Click" FontSize="14" FontWeight="Bold"></Button>
+        </StackPanel>
     </Grid>
 </Page>

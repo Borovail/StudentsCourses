@@ -115,31 +115,19 @@ namespace ExamWpf.Pages
             
         }
 
-        private void DataGrid_Loaded(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in DataGrid.Items)
-            {
-                var name = ((Courses)item).Name;
-
-                foreach (var student in AppData.db.Students)
-                {
-                    if (student.CourseName == name)
-                    {
-                        
-                    }
-                }
-            }
-        }
-
-
         private void CovertToCSV_btn_Click(object sender, RoutedEventArgs e)
         {
-            Convertor.ExportToCsv(DataGrid, "");
+            PathPage pathPage = new PathPage(DataGrid, ConvertType.Csv);
+
+            NavigationService.Navigate(pathPage);
         }
 
         private void CovertToExcel_btn_Click(object sender, RoutedEventArgs e)
         {
-            Convertor.ExportToExcel(DataGrid, Environment.CurrentDirectory, "Pivovar");
+            PathPage pathPage = new PathPage(DataGrid, ConvertType.Excel);
+
+            NavigationService.Navigate(pathPage);
+
         }
     }
 }
