@@ -23,15 +23,15 @@ namespace ExamWpf.Pages
     /// </summary>
     public partial class MainPage : Page
     {
-        public  MainPage() 
+        readonly string Path;
+        public MainPage()
         {
             InitializeComponent();
         }
         private void Convert_btn_Click(object sender, RoutedEventArgs e)
         {
             NavigationGrid.Visibility = Visibility.Hidden;
-            ConvertGrid.Visibility = Visibility.Visible;
-        }
+  }
 
         private void Students_btn_Click(object sender, RoutedEventArgs e)
         {
@@ -46,12 +46,7 @@ namespace ExamWpf.Pages
         private void Back_btn_Click(object sender, RoutedEventArgs e)
         {
             NavigationGrid.Visibility = Visibility.Visible;
-            ConvertGrid.Visibility = Visibility.Hidden;
-        }
 
-        private void coursesCSV_btn_Click(object sender, RoutedEventArgs e)
-        {
-           
         }
     }
 }

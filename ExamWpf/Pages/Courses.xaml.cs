@@ -25,13 +25,9 @@ namespace ExamWpf.Pages
     /// </summary>
     public partial class Courses : Page
     {
-        List<string> MyListBoxItems;
         public Courses()
         {
             InitializeComponent();
-
-
-            MyListBoxItems = new List<string>();
 
             comboBox.Items.Add("Teacher");
             comboBox.Items.Add("Name");
@@ -135,6 +131,15 @@ namespace ExamWpf.Pages
             }
         }
 
-       
+
+        private void CovertToCSV_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Convertor.ExportToCsv(DataGrid, "");
+        }
+
+        private void CovertToExcel_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Convertor.ExportToExcel(DataGrid, Environment.CurrentDirectory, "Pivovar");
+        }
     }
 }

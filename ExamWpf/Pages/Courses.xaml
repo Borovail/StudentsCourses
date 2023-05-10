@@ -42,10 +42,15 @@
         </DataGrid.Columns>
     </DataGrid>
     <DockPanel Grid.Row="2">
-            <Button  Width="100" Content="Delete" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left" Margin="100 0 100 0" x:Name="Delete_btn" Click="Delete_btn_Click"></Button>
-            <Button  Width="100" Content="Update" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"  Margin="50 0 100 0" x:Name="Update_btn" Click="Update_btn_Click"></Button>
-            <Button  Width="100" Content="Add" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" Margin="0 0 100 0" x:Name="Add_btn" Click="Add_btn_Click"></Button>
-    </DockPanel>
+            <Button  Width="100" Content="Delete" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left"  x:Name="Delete_btn" Click="Delete_btn_Click" Margin="20,0,20,0"></Button>
+            <Button  Width="100" Content="Update" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"   x:Name="Update_btn" Click="Update_btn_Click" Margin="0,0,20,0"></Button>
+            <Button  Width="100" Content="Add" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right"  x:Name="Add_btn" Click="Add_btn_Click"></Button>
+            <Button DockPanel.Dock="Right"  Width="150" Content="Convert to CSV" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" x:Name="CovertToCSV_btn" Click="CovertToCSV_btn_Click" ></Button>
+            <Button  DockPanel.Dock="Right" Width="150" Content="Convert to Excel" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right"  x:Name="CovertToExcel_btn" Click="CovertToExcel_btn_Click" Margin="0,0,20,0"></Button>
+            <Button BorderThickness="0,0,2,0" Width="10"  Background="Transparent" ></Button>
+
+
+        </DockPanel>
         <DockPanel Grid.Row="0">
             <Button x:Name="Back_bnt" Content="Back" FontSize="14" FontWeight="Bold" DockPanel.Dock="Left" Width="100" Click="Back_bnt_Click"></Button>
             <ComboBox x:Name="comboBox" DockPanel.Dock="Right" Width="100" Height="25" FontSize="14" FontWeight="Bold"></ComboBox>

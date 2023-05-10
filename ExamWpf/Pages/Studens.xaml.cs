@@ -130,15 +130,16 @@ namespace ExamWpf.Pages
             column.ItemsSource = courseNames;
 
         }
-        private void ExportToCsv(DataGrid dataGrid, string filePath)
+
+
+        private void CovertToCSV_btn_Click(object sender, RoutedEventArgs e)
         {
-            using (var writer = new StreamWriter(filePath))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                csv.WriteRecords(dataGrid.Items.OfType<object>());
-            }
+            Convertor.ExportToCsv(DataGrid,"");
         }
 
-       
+        private void CovertToExcel_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Convertor.ExportToExcel(DataGrid, "","");
+        }
     }
 }
