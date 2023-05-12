@@ -27,25 +27,17 @@ namespace ExamWpf.Pages
         {
             InitializeComponent();
         }
-        private void Convert_btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationGrid.Visibility = Visibility.Hidden;
-  }
+
 
         private void Students_btn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Studens());
+            NavigationService.Navigate(new Pages.Studens());
         }
 
         private void Courses_btn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Courses());
+            NavigationService.Navigate(new Pages.Courses());
         }
 
-        private void Back_btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationGrid.Visibility = Visibility.Visible;
-
-        }
     }
 }

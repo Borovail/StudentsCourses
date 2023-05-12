@@ -41,11 +41,13 @@ namespace ExamWpf.Pages
 
             foreach (var course in courses)
             {
+                course.StudentsInCourse = "";
+
                 foreach (var student in AppData.db.Students)
                 {
                     if (course.Name == student.CourseName)
                     {
-                        course.StudentsInCourse += student.Name + " " + student.Surname + "   ";
+                        course.StudentsInCourse+="("+student.Name + " " + student.Surname + ")   ";
                     }
                 }
             }
@@ -53,30 +55,53 @@ namespace ExamWpf.Pages
             await Dispatcher.InvokeAsync(() => { DataGrid.ItemsSource = courses; });
 
         }
-      
+
 
         private async void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGrid.SelectedItem != null)
+            try
             {
-                if (MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+
+                if (DataGrid.SelectedItem != null)
                 {
-                    AppData.db.Courses.Remove(DataGrid.SelectedItem as Model.Courses);
+                    if (MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        AppData.db.Courses.Remove(DataGrid.SelectedItem as Model.Courses);
 
-                    await AppData.db.SaveChangesAsync();
+                        await AppData.db.SaveChangesAsync();
 
+                        DataGrid.ItemsSource = AppData.db.Courses.ToList();
+
+                    }
                 }
             }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("You can't delete it", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private async void Update_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGrid.SelectedItem != null)
+            try
             {
-                AppData.db.Courses.AddOrUpdate(DataGrid.SelectedItem as Model.Courses);
 
-                await AppData.db.SaveChangesAsync();
+                if (DataGrid.SelectedItem != null)
+                {
+                    AppData.db.Courses.AddOrUpdate(DataGrid.SelectedItem as Model.Courses);
 
+                    await AppData.db.SaveChangesAsync();
+
+                    DataGrid.ItemsSource = AppData.db.Courses.ToList();
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("You can't delete it", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -86,14 +111,20 @@ namespace ExamWpf.Pages
             {
                 var currentCourse = DataGrid.SelectedItem as Model.Courses;
 
-                var course = new Model.Courses() { Name = currentCourse.Name, Teacher= currentCourse.Teacher };
+                if (currentCourse != null)
+                {
 
-                AppData.db.Courses.Add(course);
+                    var course = new Model.Courses() { Name = currentCourse.Name, Teacher = currentCourse.Teacher };
 
-                await AppData.db.SaveChangesAsync();
+                    AppData.db.Courses.Add(course);
 
+                    await AppData.db.SaveChangesAsync();
 
+                    DataGrid.ItemsSource = AppData.db.Courses.ToList();
+
+                }
             }
+
         }
 
         private  void textBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -47,24 +47,42 @@ namespace ExamWpf.Pages
 
         private async void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGrid.SelectedItem != null)
+            try
             {
-                if (MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (DataGrid.SelectedItem != null)
                 {
-                    AppData.db.Students.Remove(DataGrid.SelectedItem as Model.Students);
+                    if (MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        AppData.db.Students.Remove(DataGrid.SelectedItem as Model.Students);
 
-                    await AppData.db.SaveChangesAsync();
+                        await AppData.db.SaveChangesAsync();
+
+                        DataGrid.ItemsSource = AppData.db.Students.ToList();
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("You can't delete it", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private async void Update_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGrid.SelectedItem != null)
+            try
             {
-                AppData.db.Students.AddOrUpdate(DataGrid.SelectedItem as Students);
+                if (DataGrid.SelectedItem != null)
+                {
+                    AppData.db.Students.AddOrUpdate(DataGrid.SelectedItem as Students);
 
-                await AppData.db.SaveChangesAsync();
+                    await AppData.db.SaveChangesAsync();
+
+                    DataGrid.ItemsSource = AppData.db.Students.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("You can't delete it", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private async void Add_btn_Click(object sender, RoutedEventArgs e)
@@ -74,11 +92,18 @@ namespace ExamWpf.Pages
             {
                 var currentStudent = DataGrid.SelectedItem as Students;
 
-                var student = new Students() { Age = currentStudent.Age, CourseName = currentStudent.CourseName, Name = currentStudent.Name, Surname = currentStudent.Surname };
+                if (currentStudent != null)
+                {
 
-                AppData.db.Students.Add(student);
+                    var student = new Students() { Age = currentStudent.Age, CourseName = currentStudent.CourseName, Name = currentStudent.Name, Surname = currentStudent.Surname };
 
-                await AppData.db.SaveChangesAsync();
+                    AppData.db.Students.Add(student);
+
+                    await AppData.db.SaveChangesAsync();
+
+                    DataGrid.ItemsSource = AppData.db.Students.ToList();
+
+                }
             }
         }
 
@@ -115,13 +140,10 @@ namespace ExamWpf.Pages
             {
                 courseNames.Add(item.Name);
             }
+
             courseNames.Add("None");
         }
 
-        private void ComboBox_Selected(object sender, RoutedEventArgs e)
-        {
-            AppData.db.Students.AddOrUpdate(DataGrid.SelectedItem as Students);
-        }
 
         private void DataGrid_Loaded(object sender, RoutedEventArgs e)
         {
@@ -145,5 +167,6 @@ namespace ExamWpf.Pages
 
             NavigationService.Navigate(pathPage);
         }
+
     }
 }

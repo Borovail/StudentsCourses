@@ -8,14 +8,17 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PathPage">
 
-    <Grid Background="White">
-        <Button Content="Back" x:Name="Back_btn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="40" Margin="50" FontSize="14" FontWeight="Bold" Click="Back_btn_Click"></Button>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200">
+    <Grid Background="SlateGray">
+        <Button x:Name="Back_btn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Height="40" Margin="50" FontSize="14" FontWeight="Bold" Click="Back_btn_Click">
+            <Image Source="C:\Users\ASUS\Source\Repos\StudentsCourses\ExamWpf\Pages\button-1905959_960_720.webp" Stretch="Fill"></Image>
+        </Button>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="300">
             <Label Content="Save path" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"></Label>
-            <TextBox x:Name="Path_textBox"></TextBox>
+            <TextBox x:Name="Path_textBox" Margin="0,10,0,50"></TextBox>
             <Label Content="File name" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"></Label>
-            <TextBox  x:Name="Name_textBox"></TextBox>
-            <Button x:Name="Confirm_btn" Content="Confirm" Margin="30" Click="Confirm_btn_Click" FontSize="14" FontWeight="Bold"></Button>
+            <TextBox  x:Name="Name_textBox" Margin="0,10,0,50"></TextBox>
+            <Button x:Name="Confirm_btn" Content="Confirm" Margin="30" Click="Confirm_btn_Click" FontSize="14" FontWeight="Bold" Height="28" Width="136" Background="CornflowerBlue">
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

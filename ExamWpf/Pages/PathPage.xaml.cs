@@ -43,11 +43,11 @@ namespace ExamWpf.Pages
 
             if (Name_textBox.Text != "" && ConvertType == ConvertType.Csv)
             {
-                FileName = Name_textBox.Text+".csv";
+                FileName = Name_textBox.Text;
             }
             else if (Name_textBox.Text != "" && ConvertType == ConvertType.Excel)
             {
-                FileName = Name_textBox.Text + ".xlsx";
+                FileName = Name_textBox.Text;
             }
 
             if (Path_textBox.Text != "")
@@ -57,9 +57,17 @@ namespace ExamWpf.Pages
 
             if (ConvertType == ConvertType.Csv)
             {
+                FileName += ".csv";
+
                 if (!Convertor.ExportToCsv(DataDrid, path, FileName)) return;
             }
-            else if(!Convertor.ExportToExcel(DataDrid, path, FileName)) return;
+            if (ConvertType == ConvertType.Excel)
+            {
+                FileName += ".xlsx";
+
+                if (!Convertor.ExportToExcel(DataDrid, path, FileName)) return;
+
+            }
 
             MessageBox.Show("File succesfully created", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
