@@ -24,7 +24,9 @@ namespace ExamWpf
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new Courses());
+            MainFrame.Navigate(new MainPage());
         }
+
+        
     }
 }
