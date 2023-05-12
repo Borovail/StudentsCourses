@@ -47,7 +47,7 @@ namespace ExamWpf.Pages
                 {
                     if (course.Name == student.CourseName)
                     {
-                        course.StudentsInCourse+="("+student.Name + " " + student.Surname + ")   ";
+                        course.StudentsInCourse+="("+student.Name + " " + student.Surname + "),   ";
                     }
                 }
             }
